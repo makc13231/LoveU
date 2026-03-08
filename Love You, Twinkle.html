@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ILY, Twinkle</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffb6c1",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#0f001a",
+                        "space-violet": "#4b0082"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "handwriting": ["Caveat", "cursive"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .star-bg {
+                background: linear-gradient(135deg, #0f001a 0%, #4b0082 100%);
+                position: relative;
+                overflow: hidden;
+            }
+            .glow-text {
+                text-shadow: 0 0 10px rgba(255, 182, 193, 0.5), 0 0 20px rgba(255, 182, 193, 0.3);
+            }
+            .fade-transition {
+                transition: opacity 800ms ease-in-out;
+            }
+            @keyframes star-flight {
+                0% {
+                    transform: translate(0, 0) scale(1);
+                    opacity: 0.5;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: translate(-120vw, 80vh) scale(1.2);
+                    opacity: 0.5;
+                }
+            }
+            @keyframes twinkle {
+                0%, 100% { opacity: 0.5; transform: scale(0.8); }
+                50% { opacity: 1; transform: scale(1.1); }
+            }
+            .star-particle {
+                position: absolute;
+                background-color: white;
+                border-radius: 50%;
+                pointer-events: none;
+                animation: star-flight linear infinite;
+            }
+            .twinkle-layer {
+                animation: twinkle 3s ease-in-out infinite;
+            }
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen overflow-hidden">
+<div class="relative flex h-screen w-full flex-col star-bg dark group/design-root overflow-hidden cursor-pointer select-none" id="main-container">
+<div class="absolute inset-0 overflow-hidden pointer-events-none" id="stars-layer"></div>
+<div class="flex items-center p-4 pb-2 justify-between z-10">
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12 pr-12 font-display opacity-70">С праздником</h2>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-6 z-10">
+<div class="w-[90%] sm:w-[80%] max-w-lg mx-auto text-center space-y-8">
+<h1 class="text-primary tracking-wide text-4xl sm:text-5xl font-bold leading-relaxed px-2 text-center pb-3 pt-6 font-handwriting glow-text fade-transition opacity-100" id="message-text">
+                    Ты — мой личный космос, самая яркая звезда и самая тёплая галактика
+                </h1>
+<div class="h-px w-16 bg-primary/30 mx-auto"></div>
+<p class="text-slate-200 text-sm font-normal leading-normal pb-3 pt-1 px-4 text-center opacity-80 tracking-wide">
+                    Коснись экрана, чтобы продолжить
+                </p>
+</div>
+</div>
+<div class="h-10"></div>
+</div>
+<script>
+        const messages = [
+            "Ты — мой личный космос, самая яркая звезда и самая тёплая галактика",
+            "Пусть твоё сияние затмевает даже самые далёкие сверхновые",
+            "В бесконечной вселенной моё сердце всегда выбирает твою орбиту",
+            "Ты вдохновляешь меня на открытия, о которых я даже не мечтал",
+            "Твоя улыбка — это свет, который путеводит меня сквозь любую тьму",
+            "С 8 Марта, моя самая прекрасная звезда в этом космическом океане",
+            "Ты — гравитация, которая держит мой мир в идеальном равновесии",
+            "Каждое мгновение с тобой — это путешествие к самым прекрасным туманностям",
+            "Ты делаешь этот холодный космос бесконечно уютным и родным",
+            "Оставайся всегда такой же неповторимой и таинственной, как сама Вселенная"
+        ];
+        let currentMessageIndex = 0;
+        const messageElement = document.getElementById('message-text');
+        const container = document.getElementById('main-container');
+        const starsLayer = document.getElementById('stars-layer');
+        // Logic for message rotation
+        function getRandomMessage() {
+            let nextIndex;
+            do {
+                nextIndex = Math.floor(Math.random() * messages.length);
+            } while (nextIndex === currentMessageIndex);
+            currentMessageIndex = nextIndex;
+            return messages[nextIndex];
+        }
+        container.addEventListener('click', () => {
+            messageElement.classList.remove('opacity-100');
+            messageElement.classList.add('opacity-0');
+            setTimeout(() => {
+                messageElement.textContent = getRandomMessage();
+                messageElement.classList.remove('opacity-0');
+                messageElement.classList.add('opacity-100');
+            }, 800);
+        });
+        // Star animation logic
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star-particle';
+            // Random size
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            // Color variation
+            const colors = ['#ffffff', '#ffb6c1', '#e0e7ff', '#ffffff'];
+            star.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            // Random start position (mostly top and right to fly across to bottom-left)
+            const startTop = Math.random() * 120 - 20; // -20 to 100
+            const startLeft = Math.random() * 120; // 0 to 120
+            star.style.top = `${startTop}%`;
+            star.style.left = `${startLeft}%`;
+            // Speed (3 to 8 seconds for a trip)
+            const duration = Math.random() * 10 + 5;
+            star.style.animationDuration = `${duration}s`;
+            // Delay
+            //star.style.animationDelay = `${Math.random() * 10}s`;
+            // Adding a nested div for flickering
+            const inner = document.createElement('div');
+            inner.className = 'w-full h-full twinkle-layer rounded-full';
+            inner.style.animationDelay = `${Math.random() * 2}s`;
+            star.appendChild(inner);
+            starsLayer.appendChild(star);
+        }
+        // Generate initial stars
+        for (let i = 0; i < 120; i++) {
+            createStar();
+        }
+    </script>
+
+</body></html>
