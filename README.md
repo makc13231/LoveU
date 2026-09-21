@@ -1,2 +1,2 @@
 # LoveU
-SiteMade4MyLove
+SiteMadeWithLove
